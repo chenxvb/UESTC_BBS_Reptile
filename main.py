@@ -8,6 +8,24 @@ import json
 
 keywords = []
 
+tample_config = {
+    "keywords": [],
+    "FangTang_APIkey": "",
+    "HePan_Cookies": "",
+    "WeiBang_Cookies": "",
+    "telegram_cookie": "",
+    "telegram_chatid": "",
+    "telegram_url": ""
+
+}
+
+def report(data:str, func):
+
+    if func == hp:
+        rp.sendMsg("河畔更新：" + data)
+        
+    if func == wb:
+        rp.sendMsg("微帮更新：" + data)
 
 def keywordCheck(data: list, func):
     tmp = data
@@ -26,13 +44,13 @@ def keywordCheck(data: list, func):
             print("\n河畔更新：", data[0])
         if func == wb:
             print("\n微帮更新：", data[0])
+        
+        if keywords == []:
+            report(data[0], func)
 
         for i in keywords:
             if i in data[0]:
-                if func == hp:
-                    rp.FangTang("河畔更新：" + data[0])
-                if func == wb:
-                    rp.FangTang("微帮更新：" + data[0])
+                report(data[0], func)
                 # rp.xiaoWei(data[0])
                 
     return data
@@ -42,6 +60,11 @@ if __name__ == "__main__":
     hepanFlag = True
     weibangFlag = True
     
+    if "config.json" not in os.listdir("./"):
+        print("[+] 未检测到配置文件，请生成后填入信息")
+        json_write("./config.json", tample_config)
+        exit()
+
     with open("./config.json", 'r', encoding="utf-8") as f:
         tmp = json.load(f)
         keywords = tmp["keywords"]

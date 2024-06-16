@@ -1,6 +1,6 @@
 import json
 
-def json_read(file):
+def json_read(file:str):
     try:
         with open(file, 'r', encoding="utf-8") as f:
             content = json.load(f)
@@ -8,7 +8,7 @@ def json_read(file):
     except:
         return -1
 
-def json_write(file, content):
+def json_write(file:str, content:dict):
     try:
         with open(file, 'w+', encoding="utf-8") as f: 
             f.write(json.dumps(content, sort_keys=True, indent=4, separators=(',', ': '), ensure_ascii=False))
